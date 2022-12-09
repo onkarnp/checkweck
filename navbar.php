@@ -29,6 +29,9 @@
       <li class="nav-item">
         <a class="nav-link" href="scanshipment.php">Update Location</a>
       </li>
+    <li class="nav-item">
+    <a class="nav-link" href="transferownership.php"> Transfer Ownership </a>
+    </li>
     <?php
     }
     }

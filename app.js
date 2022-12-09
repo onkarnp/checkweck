@@ -105,4 +105,4 @@ var contractAbi = [
 	}
 ]; // Paste Contract Here
 
-var contractAddress ='0x450e9E16237bd47AAb0c1239aB8cE747be9BdB30'; // Paste Address here
+var contractAddress ='0x970dC550DfCdEE60736327029B7Fe8A1F22DB49b'; // Paste Address here
