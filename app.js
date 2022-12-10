@@ -63,6 +63,30 @@ var contractAbi = [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "prodid",
+				"type": "uint256"
+			}
+		],
+		"name": "getOwner",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_owner",
+				"type": "string"
+			},
+			{
 				"internalType": "string",
 				"name": "_text",
 				"type": "string"
@@ -102,7 +126,31 @@ var contractAbi = [
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "prodid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "owner",
+				"type": "string"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ]; // Paste Contract Here
 
-var contractAddress ='0x970dC550DfCdEE60736327029B7Fe8A1F22DB49b'; // Paste Address here
+var contractAddress ='0x17E480d00e2A04dC7A305778C5c66cD70AdEa3fc'; // Paste Address here

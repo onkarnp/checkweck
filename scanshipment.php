@@ -57,6 +57,7 @@ $color="navbar-dark cyan darken-3";
                     <div class="formitem">
                         <label type="text" class="formlabel"> Location </label>
                         <input type="text" class="forminput" id="prodlocation" required>
+                        <input type="hidden" class="forminput" id="email" value=<?php echo $_SESSION['email']; ?> required>
                     </div>
                     <button class="formbtn" id="mansub" type="submit">Update</button>
                 </form>
@@ -161,9 +162,14 @@ $color="navbar-dark cyan darken-3";
         event.preventDefault(); // to prevent page reload when form is submitted
         prodid = $('#prodid').val();
         prodlocation = $('#prodlocation').val();
+        email = $('#email').val();
+        var receipt = "";
         console.log(prodid);
         console.log(prodlocation);
-        var today = new Date();
+        web3.eth.getAccounts().then(async function(accounts) {
+          await contract.methods.getOwner(prodid).call(function(err, result) {
+            if (result === email) {
+          var today = new Date();
         var thisdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var info = "<br><br><b>Date: "+thisdate+"</b><br>Location: "+prodlocation;
         web3.eth.getAccounts().then(async function(accounts) {
@@ -177,6 +183,18 @@ $color="navbar-dark cyan darken-3";
           });
         });
         $("#prodid").val('');
+        }   else {
+          var msg="You are not the owner of this product!";
+              $("#alertText").html(msg);
+              $("#qrious").hide();
+              $("#bottomText").hide();
+              $(".customalert").show("fast","linear");
+        }
+          // $(".cardstyle").show("fast","linear");
+          // $("#database").html(result);
+        });
+        });
+        // console.log(email);
       });
 
 
@@ -219,4 +237,3 @@ $color="navbar-dark cyan darken-3";
     </script>
   </body>
 </html>
- 

@@ -56,7 +56,7 @@
             <label type="text" class="formlabel"> Email </label>
             <input type="text" class="forminput" name="email" id="email" onkeypress="isNotChar(event)" required>
 
-            <label type="text" class="formlabel" style="margin-top: 10px;"> Userame </label>
+            <label type="text" class="formlabel" style="margin-top: 10px;"> Username </label>
             <input type="text" class="forminput" name="username" id="username" onkeypress="blockSpaces(event)" required>
 
             <label type="text" class="formlabel" style="margin-top: 10px;"> Password </label>
@@ -68,8 +68,8 @@
             <label type="text" class="formlabel" style="margin-top: 10px;"> Select Your Role </label>
             <select class="formselect" name="role">
               <option value="2">Consumer</option>
-              <!-- <option value="1">Retailer</option>
-              <option value="1">Distributor</option> -->
+              <option value="1">Retailer</option>
+              <option value="1">Distributor</option>
               <option value="0">Manufacturer</option>
             </select>
 

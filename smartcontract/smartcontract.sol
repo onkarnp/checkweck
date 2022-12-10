@@ -11,6 +11,7 @@ contract SupplyChain {
     
     struct Product{
         address creator;
+        string productOwner;
         string productName;
         uint256 productId;
         string date;
@@ -31,12 +32,21 @@ contract SupplyChain {
         for (uint i = 0; i < bytes_b.length; i++) bytes_c[k++] = bytes_b[i];
         return string(bytes_c);
     }
+
+    function getOwner(uint prodid) public returns (string memory){
+        return allProducts[prodid].productOwner;
+    }
     
-    function newItem(string memory _text, string memory _date) public returns (bool) {
-        Product memory newItem = Product({creator: msg.sender, totalStates: 0,productName: _text, productId: items, date: _date});
+    function newItem(string memory _owner,string memory _text, string memory _date) public returns (bool) {
+        Product memory newItem = Product({creator: msg.sender,productOwner: _owner, totalStates: 0,productName: _text, productId: items, date: _date});
         allProducts[items]=newItem;
         items = items+1;
         emit Added(items-1);
+        return true;
+    }
+
+    function transferOwnership(uint prodid, string memory owner) public returns (bool) {
+        allProducts[prodid].productOwner=owner;
         return true;
     }
     

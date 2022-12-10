@@ -55,6 +55,7 @@
             $stmt->execute();
             $_SESSION['role']=$role;
             $_SESSION['username']=$username;
+            $_SESSION['email']=$email;
             include 'redirection.php';
             redirect('checkproduct.php');
         }

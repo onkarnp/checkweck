@@ -1,5 +1,7 @@
 <?php 
-session_start(); ?>
+session_start(); 
+$color="navbar-dark cyan darken-3";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,193 +12,228 @@ session_start(); ?>
     <link rel="SHORTCUT ICON" href="images/Checkweck.png" type="image/x-icon" />
     <link rel="ICON" href="images/Checkweck.png" type="image/ico" />
 
-    <title>Checkweck - Transfer Ownership</title>
+    <title>Checkweck - Update location</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mdb.min.css" rel="stylesheet">
+
     <link href="css/style.css" rel="stylesheet">
 
   </head>
-
   <?php
-  $errormsg="Please check Product Code and Owner Username and try again.";
-  $submission=0;
-
-  if( isset($_POST['transferown']) ){
-    if( isset($_POST['proco']) && isset($_POST['ownusr']) ){
-        include 'connectdb.php';
-        $conn=openConnection();
-        $proco=$_POST['proco'];
-        $ownusr=$_POST['ownusr'];
-        console.log("1");
-        // $proco=mysqli_real_escape_string($conn,trim($_POST['proco']));
-        // console.log(productcode);
-        // console.log(ownrusnm);
-        // echo $ownusr;
-        // echo $proco;
-        // $proco=mysqli_real_escape_string($conn,trim($_POST['proco']));
-        // $ownusr=md5(trim($_POST['ownusr']));
-        // $submission=1;
-
-        // $insertQ="SELECT * FROM users WHERE proco='$proco' AND password='$ownusr' ";
-        // $qry_result=mysqli_query($conn, $insertQ) or die(mysqli_error($conn));
-        // if( mysqli_num_rows($qry_result)>0 ){
-        //     $row = mysqli_fetch_array($qry_result);
-        //     $_SESSION['role']=$row['role'];
-        //     $_SESSION['username']=$row['username'];
-        //     include 'redirection.php';
-            redirect('checkproduct.php');
-        // }else{
-        //     $submission=10;
-        // }
-
-        if( $submission==0 ){}}}
+    if( $_SESSION['role']==0 || $_SESSION['role']==1  ){
   ?>
-
   <body class="violetgradient">
-  <center>
-      <div class="customalert">
-          <div class="alertcontent">
-              <div id="alertText"> &nbsp </div>
-              <img id="qrious">
-              <div id="bottomText" style="margin-top: 10px; margin-bottom: 15px;"> &nbsp </div>
-              <button id="closebutton" class="formbtn"> OK </button>
-          </div>
-      </div>
-  </center>
-    <div style="width: 100%">
+    <?php include 'navbar.php'; ?>
+    <center>
+        <div class="customalert">
+            <div class="alertcontent">
+                <div id="alertText"> &nbsp </div>
+                <img id="qrious">
+                <div id="bottomText" style="margin-top: 10px; margin-bottom: 15px;"> &nbsp </div>
+                <button id="closebutton" class="formbtn"> Done </button>
+            </div>
+        </div>
+    </center>
+
+    <div class="bgroles">
       <center>
-
-      <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>
-    function showAlert(message){
-      $("#alertText").html(message);
-      $("#qrious").hide();
-      $("#bottomText").hide();
-      $(".customalert").show("fast","linear");
-    }
-    </script>
-    <?php echo "<script> showAlert('$errormsg') </script>";
-     ?>
-
-      <div class="loginformcard" id="card1">
-      <h4> Transfer Ownership</h4>
-            <form style="margin-top: 30px; margin-bottom: 30px;" action="tranformownership.php" method="POST" >
-<!-- onsubmit="return checkFirstForm(this);" -->
-            <label type="text" class="formlabel"> Product Code </label>
-            <input type="text" class="forminput" value="1" name="proco" id="proco" onkeypress="isNotChar(event)" required>
-            <!--<?php echo $proco; ?>  -->
-
-            <label type="text" class="formlabel" style="margin-top: 10px;"> Owner Username </label>
-            <input type="text" class="forminput" value="2" name="ownusr" id="ownusr" onkeypress="isNotChar(event)" required>
-            <!-- <?php echo $_POST['ownusr']; ?>  -->
-
-            <button class="formbtn" name="transferown" type="submit">Transfer Ownership</button>
-
-            <br>
-            </form>
-                
-      </div>
+        <div class="mycardstyle">
+            <div class="greyarea">
+                <h5> Please fill the following information  </h5>
+                <form id="form2" autocomplete="off">
+                    <div class="formitem">
+                        <label type="text" class="formlabel"> Product ID </label>
+                        <input type="text" class="forminput" id="prodid" onkeypress="isInputNumber(event)" required>
+                        <label class=qrcode-text-btn style="width:4%;display:none;">
+                            <input type=file accept="image/*" id="selectedFile" style="display:none" capture=environment onchange="openQRCamera(this);" tabindex=-1>
+                        </label>
+                        <button class="qrbutton2" onclick="document.getElementById('selectedFile').click();" style="margin-bottom: 5px;margin-top: 5px;">
+                        <i class='fa fa-qrcode'></i> Scan QR
+		                </button
+                    </div>
+                    <div class="formitem">
+                        <label type="text" class="formlabel"> Enter New Owner Email </label>
+                        <input type="text" class="forminput" id="new_own_email" required>
+                        <input type="hidden" class="forminput" id="curr_usr_email" value=<?php echo $_SESSION['email']; ?> required>
+                    </div>
+                    <button class="formbtn" id="mansub" type="submit">Update</button>
+                </form>
+            </div>
       </center>
-    </div>
     <?php
-    //     }
-    //  }
-    // else{
-    // include 'redirection.php';
-    // redirect('tranformownership.php');
-    // }
-
-    // }
-    // else{
-    // include 'redirection.php';
-    // redirect('tranformownership.php');
-    // }
+    }else{
+        include 'redirection.php';
+        redirect('index.php');
+    }
     ?>
+
+    <div class='box'>
+      <div class='wave -one'></div>
+      <div class='wave -two'></div>
+      <div class='wave -three'></div>
+    </div>
+    
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Material Design Bootstrap-->
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/mdb.min.js"></script>
+
+    <!-- Web3.js -->
+    <script src="web3.min.js"></script>
+
+    <!-- QR Code Library-->
+    <script src="./dist/qrious.js"></script>
+
+    <!-- QR Code Reader -->
+	<script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+
+    <script src="app.js"></script>
+
+    <!-- Web3 Injection -->
     <script>
-  
-    function isInputNumber(evt){
-      var ch = String.fromCharCode(evt.which);
-      if(!(/[0-9]/.test(ch))){
-          evt.preventDefault();
+      // Initialize Web3
+      if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+        web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545'));
+      } else {
+        web3 = new Web3(new Web3.providers.HttpProvider('HTTP://127.0.0.1:7545'));
       }
-    }
-    function isNotChar(evt){
-      var ch = String.fromCharCode(evt.which);
-      if(ch=="'"){
-        evt.preventDefault();
-      }
-    }
 
-    function blockSpecialChar(e){
-      var k;
-      document.all ? k = e.keyCode : k = e.which;
-      return ((k >= 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 46|| k == 42|| k == 33 || k == 32 || (k >= 48 && k <= 57));
-    }
+      // Set the Contract
+    var contract = new web3.eth.Contract(contractAbi, contractAddress);
 
-    $("#login").on("click", function(){
-      $("#card1").hide("fast","linear");
-      $("#maincard3").hide("fast","linear");
-      $("#maincard2").show("fast","linear");
+
+
+    $("#manufacturer").on("click", function(){
+        $("#districard").hide("fast","linear");
+        $("#manufacturercard").show("fast","linear");
     });
 
-    $("#gotologin").on("click", function(){
-      $("#card1").hide("fast","linear");
-      $("#maincard3").hide("fast","linear");
-      $("#maincard2").show("fast","linear");
-    });
-
-    $("#openlogin").on("click", function(){
-      $("#card1").hide("fast","linear");
-      $("#maincard3").hide("fast","linear");
-      $("#maincard2").show("fast","linear");
-    });
-
-    $("#signup").on("click", function(){
-      $("#card1").hide("fast","linear");
-      $("#maincard2").hide("fast","linear");
-      $("#maincard3").show("fast","linear");
-    });
-
-    $("#gotosignup").on("click", function(){
-      $("#card1").hide("fast","linear");
-      $("#maincard2").hide("fast","linear");
-      $("#maincard3").show("fast","linear");
-    });
-
-    $("#opensignup").on("click", function(){
-      $("#card1").hide("fast","linear");
-      $("#maincard2").hide("fast","linear");
-      $("#maincard3").show("fast","linear");
+    $("#distributor").on("click", function(){
+        $("#manufacturercard").hide("fast","linear");
+        $("#districard").show("fast","linear");
     });
 
     $("#closebutton").on("click", function(){
         $(".customalert").hide("fast","linear");
     });
 
-    function checkFirstForm(theform){
-      var proco = theform.email.value;
 
-      if (!validateEmail(email)) {
-        showAlert("Invalid Email address");
-        return false;
+    $('#form1').on('submit', function(event) {
+        event.preventDefault(); // to prevent page reload when form is submitted
+        prodname = $('#prodname').val();
+        console.log(prodname);
+        var today = new Date();
+        var thisdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+        web3.eth.getAccounts().then(async function(accounts) {
+          var receipt = await contract.methods.newItem(prodname, thisdate).send({ from: accounts[0], gas: 1000000 })
+          .then(receipt => {
+              var msg="<h5 style='color: #53D769'><b>Item Added Successfully</b></h5><p>Product ID: "+receipt.events.Added.returnValues[0]+"</p>";
+              qr.value = receipt.events.Added.returnValues[0];
+              $bottom="<p style='color: #FECB2E'> You may print the QR Code if required </p>"
+              $("#alertText").html(msg);
+              $("#qrious").show();
+              $("#bottomText").html($bottom);
+              $(".customalert").show("fast","linear");
+          });
+          //console.log(receipt);
+        });
+        $("#prodname").val('');
+        
+    });
+
+    // Code for detecting location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    function showPosition(position) {
+        var autoLocation = position.coords.latitude +", " + position.coords.longitude;
+        $("#prodlocation").val(autoLocation);
+    }
+
+    $('#form2').on('submit', function(event) {
+        event.preventDefault(); // to prevent page reload when form is submitted
+        prodid = $('#prodid').val();
+        new_own_email = $('#new_own_email').val();
+        curr_usr_email = $('#curr_usr_email').val();
+        console.log(prodid);
+        console.log(new_own_email);
+        console.log(curr_usr_email);
+        // var today = new Date();
+        // var thisdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        // var info = "<br><br><b>Date: "+thisdate+"</b><br>Location: "+prodlocation;
+        web3.eth.getAccounts().then(async function(accounts) {
+          await contract.methods.getOwner(prodid).call(function(err, result) {
+            if (result === curr_usr_email) {
+              web3.eth.getAccounts().then(async function(accounts) {
+          var receipt = await contract.methods.transferOwnership(prodid, new_own_email).send({ from: accounts[0], gas: 1000000 })
+          .then(receipt => {
+              var msg="Owner has been updated ";
+              $("#alertText").html(msg);
+              $("#qrious").hide();
+              $("#bottomText").hide();
+              $(".customalert").show("fast","linear");
+          });
+        });
+        $("#prodid").val('');
+        }   else {
+          var msg="You are not the owner of this product!";
+              $("#alertText").html(msg);
+              $("#qrious").hide();
+              $("#bottomText").hide();
+              $(".customalert").show("fast","linear");
+        }
+          // $(".cardstyle").show("fast","linear");
+          // $("#database").html(result);
+        });
+        });
+      });
+
+
+    function isInputNumber(evt){
+      var ch = String.fromCharCode(evt.which);
+      if(!(/[0-9]/.test(ch))){
+          evt.preventDefault();
       }
-      return true;
     }
 
-    function validateEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+
+    function openQRCamera(node) {
+		var reader = new FileReader();
+		reader.onload = function() {
+			node.value = "";
+			qrcode.callback = function(res) {
+			if(res instanceof Error) {
+				alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+			} else {
+				node.parentNode.previousElementSibling.value = res;
+				document.getElementById('searchButton').click();
+			}
+			};
+			qrcode.decode(reader.result);
+		};
+		reader.readAsDataURL(node.files[0]);
+	}
+
+  function showAlert(message){
+      $("#alertText").html(message);
+      $("#qrious").hide();
+      $("#bottomText").hide();
+      $(".customalert").show("fast","linear");
     }
-    
+
+    $("#aboutbtn").on("click", function(){
+        showAlert("A Decentralised End to End Logistics Application that stores the whereabouts of product at every freight hub to the Blockchain. At consumer end, customers can easily scan product's QR CODE and get complete information about the provenance of that product hence empowering	consumers to only purchase authentic and quality products.");
+    });
+
     </script>
   </body>
 </html>
+ 

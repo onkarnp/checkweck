@@ -47,6 +47,7 @@ $color="navbar-light orange darken-4";
                         <label type="text" class="formlabel"> Product Name </label>
                         <input type="text" class="forminput" id="prodname" required>
                         <input type="hidden" class="forminput" id="user" value=<?php echo $_SESSION['username']; ?> required>
+                        <input type="hidden" class="forminput" id="email" value=<?php echo $_SESSION['email']; ?> required>
                     </div>
                     <button class="formbtn" id="mansub" type="submit">Register Item</button>
                 </form>
@@ -119,13 +120,14 @@ $color="navbar-light orange darken-4";
         event.preventDefault(); // to prevent page reload when form is submitted
         prodname = $('#prodname').val();
         username = $('#user').val(); 
+        email = $('#email').val();
         prodname=prodname+"<br>Registered By: "+username;
         console.log(prodname);
         var today = new Date();
         var thisdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
         web3.eth.getAccounts().then(async function(accounts) {
-          var receipt = await contract.methods.newItem(prodname, thisdate).send({ from: accounts[0], gas: 1000000 })
+          var receipt = await contract.methods.newItem(email,prodname,thisdate).send({ from: accounts[0], gas: 1000000 })
           .then(receipt => {
               var msg="<h5 style='color: #53D769'><b>Item Added Successfully</b></h5><p>Product ID: "+receipt.events.Added.returnValues[0]+"</p>";
               qr.value = receipt.events.Added.returnValues[0];

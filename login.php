@@ -39,6 +39,7 @@ session_start(); ?>
             $row = mysqli_fetch_array($qry_result);
             $_SESSION['role']=$row['role'];
             $_SESSION['username']=$row['username'];
+            $_SESSION['email']=$row['email'];
             include 'redirection.php';
             redirect('checkproduct.php');
         }else{
